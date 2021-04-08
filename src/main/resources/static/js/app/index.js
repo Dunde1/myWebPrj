@@ -13,6 +13,7 @@ var main = {
 
     },
     save : function () {
+        if(!this.formCheck($('#posts-title'), $('#posts-content'))){return}
         var data = {
             title: $('#posts-title').val(),
             author: $('#posts-author').val(),
@@ -27,12 +28,19 @@ var main = {
             data: JSON.stringify(data)
         }).done(function () {
           alert('글이 등록되었습니다.');
-          window.location.href = '/';
+          window.location.href = '/posts/list';
         }).fail(function (error) {
             alert(JSON.stringify(error))
         });
     },
     update : function () {
+        if($('#post-name').val()!=$('#user-name').val()) {
+            alert('글의 변경은 작성자만 가능합니다.');
+            return
+        }
+
+        if(!this.formCheck($('#posts-title'), $('#posts-content'))){return}
+
         var data = {
             title: $('#posts-title').val(),
             content: $('#posts-content').val()
@@ -48,12 +56,17 @@ var main = {
             data: JSON.stringify(data)
         }).done(function () {
             alert('글이 수정되었습니다.');
-            window.location.href = '/';
+            window.location.href = '/posts/list';
         }).fail(function (error) {
-          alert(JSON.stringify(error));
+            alert(JSON.stringify(error));
         });
     },
     delete : function () {
+        if($('#post-name').val()!=$('#user-name').val()) {
+            alert('글의 변경은 작성자만 가능합니다.');
+            return
+        }
+
         var id = $('#posts-id').val();
 
         $.ajax({
@@ -63,10 +76,22 @@ var main = {
             contentType: 'application/json; charset=utf-8',
         }).done(function () {
             alert('글이 삭제되었습니다.');
-            window.location.href = '/';
+            window.location.href = '/posts/list';
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
+    },
+    formCheck : function (title, content) {
+        if(title.val()==""){
+            alert('제목을 입력하세요.');
+            title.focus();
+            return false
+        }else if(content.val()==""){
+            alert('내용을 입력하세요');
+            content.focus();
+            return false
+        }
+        return true
     }
 };
 

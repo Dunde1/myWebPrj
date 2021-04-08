@@ -1,0 +1,123 @@
+{{>layout/header}}
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">스프링 부트 게시판</h1>
+    <p class="mb-4">자유롭게 글을 작성하세요.</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">자유 게시판</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <a href="#" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#posts-saveModal">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-flag"></i>
+                        </span>
+                        <span class="text">글작성</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>글번호</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>최근수정일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#posts}}
+                            <tr>
+                                <td>{{id}}</td>
+                                <td><a href="/posts/update/{{id}}">{{title}}</a></td>
+                                <td>{{author}}</td>
+                                <td>{{modifiedDate}}</td>
+                            </tr>
+                        {{/posts}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <form name="searchForm" action="/post/search" method="GET">
+                        <div class="form-inline">
+                            <select name="searchFilter" class="custom-select custom-select-sm">
+                                <option value="title" selected>제목</option>
+                                <option value="author">작성자</option>
+                            </select>
+                            &nbsp
+                            <input type="text" name="searchWord" class="form-control form-control-sm">
+                            &nbsp
+                            <button onclick="getSearch()" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-7">
+                    <ul class="pagination" style="float: right">
+                        {{#prevPage}}
+                        <li class="paginate_button page-item previous"><a href="/posts/list/{{prevPage}}" class="page-link"><i class="fas fa-arrow-left"></i></a></li>
+                        {{/prevPage}}
+                        {{#pageNumber}}
+                        <li class="paginate_button page-item"><a href="/posts/list/{{pgNum}}" class="page-link">{{pgNum}}</a></li>
+                        {{/pageNumber}}
+                        {{#nextPage}}
+                        <li class="paginate_button page-item next"><a href="/posts/list/{{nextPage}}" class="page-link"><i class="fas fa-arrow-right"></i></a></li>
+                        {{/nextPage}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 글 작성하기 모달 -->
+<div class="modal fade" id="posts-saveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">게시글 작성하기</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="title">제목</label>
+                        <input type="text" class="form-control" id="posts-title" placeholder="제목을 입력하세요" maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="author">작성자</label>
+                        <input type="text" class="form-control" id="posts-author" value="{{user.name}}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="content">내용</label>
+                        <textarea class="form-control" id="posts-content" placeholder="내용을 입력하세요" maxlength="1000" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary" id="btn-save">등록</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>layout/footer}}
+
+<!-- index.js 추가 -->
+<script src="/js/app/index.js"></script>
+
+</body>
+
+</html>
