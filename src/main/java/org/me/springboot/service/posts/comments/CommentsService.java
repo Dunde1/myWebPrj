@@ -33,7 +33,17 @@ public class CommentsService {
 
     @Transactional
     public CommentsId save(CommentsSaveRequestDto requestDto) {
-        return commentsRepository.save(requestDto.toEntity()).getCommentsId();
+        CommentsId commentsId = requestDto.getCommentsId();
+        Integer step = commentsRepository.countMaxStep(commentsId.getPosts().getId());
+        step = step==null?0:step+1;
+        commentsId.setStep(step);
+
+        return commentsRepository.save(CommentsSaveRequestDto.builder()
+                .commentsId(commentsId)
+                .comment(requestDto.getComment())
+                .author(requestDto.getAuthor())
+                .build()
+                .toEntity()).getCommentsId();
     }
 
     @Transactional

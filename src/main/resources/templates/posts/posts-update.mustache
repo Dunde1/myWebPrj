@@ -3,7 +3,7 @@
 <!-- DataTales Example -->
 <div class="row">
     <div class="col-md-3 mb-4"></div>
-    <div class="col-md-6 card shadow mb-4">
+    <div class="col-md-6 card shadow mb-4 border-left-primary border-bottom-primary">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">글 번호 [{{post.id}}]</h6>
         </div>
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12 mb-3">
+                <div class="col-md-6 mb-3">
                     <input type="hidden" value="{{post.id}}" id="posts-id">
                     <input type="hidden" value="{{post.author}}" id="post-name">
                     <input type="hidden" value="{{user.name}}" id="user-name">
@@ -41,39 +41,75 @@
                     <button type="button" class="btn btn-primary" id="btn-update">수정</button>
                     <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
                 </div>
+                <div class="col-md-6 mb-3">
+                    <a href="#" class="btn btn-info" data-toggle="modal" data-target="#comment-saveModal" style="float: right">댓글</a>
+                </div>
             </div>
         </div>
     </div>
     <div class="col-md-3 mb-4"></div>
 </div>
 
+<!-- 여기부터 리플 -->
+{{#comments}}
 <div class="row">
     <div class="col-md-3 mb-4"></div>
-    <div class="col-md-6 card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">작성자 아이콘</h6>
-            <h6 class="text-xs font-weight-bold text-primary text-uppercase mb-1">작성시간</h6>
+    <div class="col-md-6 card shadow mb-4 border-left-secondary border-bottom-secondary">
+        <div class="card-header col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="hidden" id="commentAuthor{{step}}" value="{{author}}">
+                    <h6 class="m-0 font-weight-bold text-primary">{{author}}</h6>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="text-align: right">{{modifiedDate}}</h6>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-12 mb-3">
+                <div class="col-md-12">
                     <div class="form-group">
-                        <textarea class="form-control" id="posts-content">내용</textarea>
+                        <textarea class="form-control" id="comment{{step}}">{{comment}}</textarea>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12 mb-3">
-                    <input type="hidden" value="{{post.id}}" id="posts-id">
-                    <input type="hidden" value="{{post.author}}" id="post-name">
-                    <input type="hidden" value="{{user.name}}" id="user-name">
-                    <button type="button" class="btn btn-primary" id="btn-update">수정</button>
-                    <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" onclick="updateComment({{step}})">수정</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteComment({{step}})">삭제</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-3 mb-4"></div>
+</div>
+{{/comments}}
+
+<!-- 리플 작성하기 모달 -->
+<div class="modal fade" id="comment-saveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">댓글 작성하기</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="content">{{user.name}}</label>
+                        <textarea class="form-control" id="comment-content" placeholder="내용을 입력하세요" maxlength="100" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary" id="btn-comment">등록</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 {{>layout/footer}}

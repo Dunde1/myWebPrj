@@ -49,10 +49,10 @@ public class PostsApiController {
     }
 
     @PutMapping("/api/v1/posts/{id}/comments/{step}")
-    public CommentsId updateComments(@PathVariable Long postId, @PathVariable Integer step, @RequestBody CommentsUpdateRequestDto requestDto){
+    public CommentsId updateComments(@PathVariable Long id, @PathVariable Integer step, @RequestBody CommentsUpdateRequestDto requestDto){
 
         CommentsId commentsId = new CommentsId();
-        Posts posts = findById(postId).getPosts();
+        Posts posts = findById(id).getPosts();
 
         commentsId.setPosts(posts);
         commentsId.setStep(step);
@@ -61,9 +61,9 @@ public class PostsApiController {
     }
 
     @DeleteMapping("/api/v1/posts/{id}/comments/{step}")
-    public CommentsId deleteComments(@PathVariable Long postId, @PathVariable Integer step){
+    public CommentsId deleteComments(@PathVariable Long id, @PathVariable Integer step){
         CommentsId commentsId = new CommentsId();
-        Posts posts = findById(postId).getPosts();
+        Posts posts = findById(id).getPosts();
 
         commentsId.setPosts(posts);
         commentsId.setStep(step);

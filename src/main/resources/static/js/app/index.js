@@ -13,7 +13,9 @@ var main = {
         $('#btn-search').on('click', function () {
             _this.search();
         });
-
+        $('#btn-comment').on('click', function () {
+            _this.saveComment();
+        });
     },
     save : function () {
         if(!this.formCheck($('#posts-title'), $('#posts-content'))){return}
@@ -38,7 +40,7 @@ var main = {
     },
     update : function () {
         if($('#post-name').val()!=$('#user-name').val()) {
-            alert('글의 변경은 작성자만 가능합니다.');
+            alert('글의 변경은 본인만 가능합니다.');
             return
         }
 
@@ -108,7 +110,96 @@ var main = {
             return false
         }
         return true
+    },
+    saveComment : function () {
+        if($('#comment-content').val()=="") {
+            alert("댓글 내용을 입력하세요.");
+            $('#comment-content').focus();
+            return
+        }
+
+        var data = {
+            commentsId: {
+                posts: {
+                    id: $('#posts-id').val()
+                }
+            },
+            comment: $('#comment-content').val(),
+            author: $('#user-name').val()
+        };
+
+        var id = $('#posts-id').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/v1/posts/'+id+'/comments',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(function () {
+            alert('댓글이 등록되었습니다.');
+            window.location.reload();
+        }).fail(function (error) {
+            alert(JSON.stringify(error))
+        });
     }
 };
 
 main.init();
+
+function updateComment(step) {
+
+    if($('#commentAuthor'+step).val()!=$('#user-name').val()){
+        alert("댓글 수정은 본인만 가능합니다.");
+        return
+    }
+
+    var commentContent = $('#comment'+step);
+
+    if(commentContent.val()=="") {
+        alert("댓글 내용을 입력해주세요.");
+        commentContent.focus();
+        return
+    }
+
+    var data = {
+        comment: commentContent.val()
+    };
+
+    var id = $('#posts-id').val();
+
+    $.ajax({
+        type: 'PUT',
+        url: '/api/v1/posts/'+id+'/comments/'+step,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(data)
+    }).done(function () {
+        alert('댓글이 수정되었습니다.');
+        window.location.reload();
+    }).fail(function (error) {
+        alert(JSON.stringify(error))
+    });
+}
+
+function deleteComment(step) {
+
+    if($('#commentAuthor'+step).val()!=$('#user-name').val()){
+        alert("댓글 수정은 본인만 가능합니다.");
+        return
+    }
+
+    var id = $('#posts-id').val();
+
+    $.ajax({
+        type: 'DELETE',
+        url: '/api/v1/posts/'+id+'/comments/'+step,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8'
+    }).done(function () {
+        alert('댓글이 삭제되었습니다.');
+        window.location.reload();
+    }).fail(function (error) {
+        alert(JSON.stringify(error))
+    });
+}

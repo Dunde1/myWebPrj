@@ -1,6 +1,8 @@
 package org.me.springboot.domain.posts.comments;
 
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.me.springboot.domain.posts.Posts;
 
 import javax.persistence.*;
@@ -10,7 +12,8 @@ import java.io.Serializable;
 @Embeddable
 public class CommentsId implements Serializable {
 
-    @ManyToOne
+    @ManyToOne()
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "postId")
     private Posts posts;
 

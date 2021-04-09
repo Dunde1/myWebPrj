@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.me.springboot.domain.posts.Posts;
 import org.me.springboot.domain.posts.PostsRepository;
+import org.me.springboot.web.dto.posts.comments.CommentsListResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -25,13 +26,20 @@ public class CommentsRepositoryTest {
 
     @AfterEach
     public void cleanup() {
-        //commentsRepository.deleteAll();
+        postsRepository.deleteAll();
+        commentsRepository.deleteAll();
     }
 
     @Test
     public void 코멘트저장_불러오기() {
         //given
-        List<Posts> list = postsRepository.findPageDesc(1);
+        postsRepository.save(Posts.builder()
+                .author("테스트 작성자")
+                .content("테스트 콘텐츠")
+                .title("테스트 제목")
+                .build());
+
+        List<Posts> list = postsRepository.findPageDesc(0);
         Posts posts = list.get(0);
 
         Integer step = commentsRepository.countMaxStep(posts.getId());
@@ -44,12 +52,10 @@ public class CommentsRepositoryTest {
         String comment = "테스트 코멘트";
         String author = "테스터";
 
-        System.out.println("확인용"+posts.getId());
-
         commentsRepository.save(Comments.builder().commentsId(commentsId).comment(comment).author(author).build());
 
         //when
-        List<Comments> commentsList = commentsRepository.findAll();
+        List<Comments> commentsList = commentsRepository.findComments(posts.getId());
 
         //then
         Comments comments = commentsList.get(0);
