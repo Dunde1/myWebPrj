@@ -1,6 +1,8 @@
 # myWebPrj
 version : 1.0
 
+외부 웹 주소 : http://mit4.iptime.org:3380/
+
 추가된 기능 : 로그인, 게시판
 
 ###로그인 기능
