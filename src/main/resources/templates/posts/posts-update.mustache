@@ -47,6 +47,35 @@
     <div class="col-md-3 mb-4"></div>
 </div>
 
+<div class="row">
+    <div class="col-md-3 mb-4"></div>
+    <div class="col-md-6 card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">작성자 아이콘</h6>
+            <h6 class="text-xs font-weight-bold text-primary text-uppercase mb-1">작성시간</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <div class="form-group">
+                        <textarea class="form-control" id="posts-content">내용</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <input type="hidden" value="{{post.id}}" id="posts-id">
+                    <input type="hidden" value="{{post.author}}" id="post-name">
+                    <input type="hidden" value="{{user.name}}" id="user-name">
+                    <button type="button" class="btn btn-primary" id="btn-update">수정</button>
+                    <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4"></div>
+</div>
+
 {{>layout/footer}}
 
 <!-- index.js 추가 -->

@@ -1,20 +1,19 @@
 package org.me.springboot.domain.posts.comments;
 
 import lombok.Data;
+import org.me.springboot.domain.posts.Posts;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
 @Embeddable
 public class CommentsId implements Serializable {
 
-    @Column(name = "id")
-    private Long post_id;
+    @ManyToOne
+    @JoinColumn(name = "postId")
+    private Posts posts;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "step")
     private int step;
 }

@@ -4,10 +4,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.me.springboot.domain.BaseTimeEntity;
+import org.me.springboot.domain.posts.Posts;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
@@ -23,8 +22,13 @@ public class Comments extends BaseTimeEntity {
     private String author;
 
     @Builder
-    public Comments(String comment, String author) {
+    public Comments(CommentsId commentsId, String comment, String author) {
+        this.commentsId = commentsId;
         this.comment = comment;
         this.author = author;
+    }
+
+    public void update(String comment) {
+        this.comment = comment;
     }
 }

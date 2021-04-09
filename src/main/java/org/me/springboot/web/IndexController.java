@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.me.springboot.config.auth.LoginUser;
 import org.me.springboot.config.auth.dto.SessionUser;
 import org.me.springboot.service.posts.PostsService;
-import org.me.springboot.web.dto.PostsListResponseDto;
-import org.me.springboot.web.dto.PostsResponseDto;
+import org.me.springboot.web.dto.posts.PostsListResponseDto;
+import org.me.springboot.web.dto.posts.PostsResponseDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +27,7 @@ public class IndexController {
         }
         return "/index";
     }
+
     @GetMapping("/login")
     public String login() {
         return "/login";
@@ -39,6 +40,7 @@ public class IndexController {
         }
         return "/error";
     }
+
     @GetMapping("/posts/list")
     public String postsMain(Model model, @LoginUser SessionUser user){
         if(user != null) {

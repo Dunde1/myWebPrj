@@ -3,15 +3,14 @@ package org.me.springboot.service.posts;
 import lombok.RequiredArgsConstructor;
 import org.me.springboot.domain.posts.Posts;
 import org.me.springboot.domain.posts.PostsRepository;
-import org.me.springboot.web.dto.PostsListResponseDto;
-import org.me.springboot.web.dto.PostsResponseDto;
-import org.me.springboot.web.dto.PostsSaveRequestDto;
-import org.me.springboot.web.dto.PostsUpdateRequestDto;
+import org.me.springboot.web.dto.posts.PostsListResponseDto;
+import org.me.springboot.web.dto.posts.PostsResponseDto;
+import org.me.springboot.web.dto.posts.PostsSaveRequestDto;
+import org.me.springboot.web.dto.posts.PostsUpdateRequestDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -40,9 +39,10 @@ public class PostsService {
     @Transactional(readOnly = true)
     public List<PostsListResponseDto> findPageDesc(int page) {
         return postsRepository.findPageDesc(page).stream()
-                .map(PostsListResponseDto::new) // == .map(posts -> new PostsListResponseDto(Posts))
+                .map(PostsListResponseDto::new) // == .map(posts -> new PostsListResponseDto(posts))
                 .collect(Collectors.toList());
     }
+
     @Transactional(readOnly = true)
     public List<PostsListResponseDto> findPageDesc(int page, String filter, String word) {
         if(filter.equals("title")) {
