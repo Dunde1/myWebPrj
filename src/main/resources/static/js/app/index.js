@@ -10,6 +10,9 @@ var main = {
         $('#btn-delete').on('click', function () {
             _this.delete();
         });
+        $('#btn-search').on('click', function () {
+            _this.search();
+        });
 
     },
     save : function () {
@@ -80,6 +83,19 @@ var main = {
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
+    },
+    search : function () {
+        var searchFilter = $('#searchFilter').val();
+        var searchWord = $('#searchWord').val();
+
+        if(!(searchFilter!="title"||searchFilter!="author")) searchFilter="none";
+
+        if(!searchWord) {
+            searchFilter="none"
+            searchWord="none";
+        }
+
+        window.location.href = '/posts/list/'+searchFilter+'/'+searchWord+'/1';
     },
     formCheck : function (title, content) {
         if(title.val()==""){

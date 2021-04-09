@@ -41,44 +41,57 @@ public class IndexController {
     }
     @GetMapping("/posts/list")
     public String postsMain(Model model, @LoginUser SessionUser user){
-        model.addAttribute("posts", postsService.findAllDesc());
-
         if(user != null) {
             model.addAttribute("user", user);
         }
-        return "/posts/list/1";
+        return "/posts/list/none/none/1";
     }
-    @GetMapping("/posts/list/{page}")
-    public String postsList(@PathVariable int page, Model model, @LoginUser SessionUser user){
-        List<PostsListResponseDto> postsList = postsService.findAllDesc();
 
-        if((page-1)*10>postsList.size()) return "/error";
+    @GetMapping("/posts/list/{filter}/{word}/{page}")
+    public String postsList(@PathVariable String filter, @PathVariable String word, @PathVariable int page, Model model, @LoginUser SessionUser user){
+        if(!(filter.equals("none")||filter.equals("title")||filter.equals("author"))) return "/error";
+
+        List<PostsListResponseDto> postsList;
+        int allRowCount = 0;
+
+        if(filter.equals("none")){
+            postsList = postsService.findPageDesc((page-1)*10);
+            allRowCount = postsService.allRowCount();
+        }else {
+            postsList = postsService.findPageDesc((page-1)*10, filter, word);
+            allRowCount = postsService.allRowCount(filter, word);
+        }
+
+        if((page-1)*10>allRowCount) return "/error";
 
         class pageNumberC {
             int pgNum;
-            pageNumberC(int i){ this.pgNum = i;}
-        }
-
-        List<PostsListResponseDto> newList = new ArrayList<>();
-        List<pageNumberC> pageNumber = new ArrayList<>();
-
-        for (int i = (page-1)*10+1; i <= page*10; i++) {
-            if(postsList.size()<i) break;
-            newList.add(postsList.get(i-1));
+            boolean isThisPage;
+            pageNumberC(int i){
+                this.pgNum = i;
+                this.isThisPage = false;
+            }
         }
 
         int startPage = ((page-1)/10)*10+1;
         int endPage = startPage+9;
-        int lastPage = (int)Math.ceil(postsList.size()/10.0);
+        int lastPage = (int)Math.ceil(allRowCount/10.0);
 
-        if((endPage-1)*10>postsList.size()) endPage = lastPage;
+        if((endPage-1)*10>allRowCount) endPage = lastPage;
 
-        for (int i = startPage; i <= endPage; i++) pageNumber.add(new pageNumberC(i));
+        List<pageNumberC> pageNumber = new ArrayList<>();
+        for (int i = startPage; i <= endPage; i++) {
+            pageNumberC tmp = new pageNumberC(i);
+            if(i==page) tmp.isThisPage=true;
+            pageNumber.add(tmp);
+        }
 
         if(startPage != 1) model.addAttribute("prevPage", ((page-11)/10)*10+10);
         if(endPage != lastPage) model.addAttribute("nextPage", ((page-1)/10)*10+11>lastPage?lastPage:((page-1)/10)*10+11);
 
-        model.addAttribute("posts", newList);
+        model.addAttribute("filter", filter);
+        model.addAttribute("word", word);
+        model.addAttribute("posts", postsList);
         model.addAttribute("thisPage", page);
         model.addAttribute("pageNumber", pageNumber);
 

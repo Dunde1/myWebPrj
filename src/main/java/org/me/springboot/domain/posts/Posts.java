@@ -24,6 +24,8 @@ public class Posts extends BaseTimeEntity {
 
     private String author;
 
+    private int comments;
+
     @Builder
     public Posts(String title, String content, String author) {
         this.title = title;
@@ -35,5 +37,4 @@ public class Posts extends BaseTimeEntity {
         this.title = title;
         this.content = content;
     }
-
 }

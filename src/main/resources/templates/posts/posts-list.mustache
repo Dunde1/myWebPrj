@@ -25,10 +25,10 @@
                     <table class="table table-bordered" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>글번호</th>
+                            <th width="100px">글번호</th>
                             <th>제목</th>
-                            <th>작성자</th>
-                            <th>최근수정일</th>
+                            <th width="200px">작성자</th>
+                            <th width="300px">최근수정일</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -40,37 +40,40 @@
                                 <td>{{modifiedDate}}</td>
                             </tr>
                         {{/posts}}
+                        {{^posts}}
+                            <tr>
+                                <td colspan="4" style="text-align: center">검색된 결과가 없습니다.</td>
+                            </tr>
+                        {{/posts}}
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-5">
-                    <form name="searchForm" action="/post/search" method="GET">
-                        <div class="form-inline">
-                            <select name="searchFilter" class="custom-select custom-select-sm">
-                                <option value="title" selected>제목</option>
-                                <option value="author">작성자</option>
-                            </select>
-                            &nbsp
-                            <input type="text" name="searchWord" class="form-control form-control-sm">
-                            &nbsp
-                            <button onclick="getSearch()" class="btn btn-primary">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </form>
+                    <div class="form-inline">
+                        <select id="searchFilter" class="custom-select custom-select-sm">
+                            <option value="title" selected>제목</option>
+                            <option value="author">작성자</option>
+                        </select>
+                        &nbsp
+                        <input type="text" id="searchWord" class="form-control form-control-sm">
+                        &nbsp
+                        <button id="btn-search" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="col-md-7">
                     <ul class="pagination" style="float: right">
                         {{#prevPage}}
-                        <li class="paginate_button page-item previous"><a href="/posts/list/{{prevPage}}" class="page-link"><i class="fas fa-arrow-left"></i></a></li>
+                        <li class="paginate_button page-item previous"><a href="/posts/list/{{filter}}/{{word}}/{{prevPage}}" class="page-link"><i class="fas fa-arrow-left"></i></a></li>
                         {{/prevPage}}
                         {{#pageNumber}}
-                        <li class="paginate_button page-item"><a href="/posts/list/{{pgNum}}" class="page-link">{{pgNum}}</a></li>
+                        <li class="paginate_button page-item{{#isThisPage}} active{{/isThisPage}}"><a href="/posts/list/{{filter}}/{{word}}/{{pgNum}}" class="page-link">{{pgNum}}</a></li>
                         {{/pageNumber}}
                         {{#nextPage}}
-                        <li class="paginate_button page-item next"><a href="/posts/list/{{nextPage}}" class="page-link"><i class="fas fa-arrow-right"></i></a></li>
+                        <li class="paginate_button page-item next"><a href="/posts/list/{{filter}}/{{word}}/{{nextPage}}" class="page-link"><i class="fas fa-arrow-right"></i></a></li>
                         {{/nextPage}}
                     </ul>
                 </div>

@@ -38,10 +38,36 @@ public class PostsService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostsListResponseDto> findAllDesc() {
-        return postsRepository.findAllDesc().stream()
+    public List<PostsListResponseDto> findPageDesc(int page) {
+        return postsRepository.findPageDesc(page).stream()
                 .map(PostsListResponseDto::new) // == .map(posts -> new PostsListResponseDto(Posts))
                 .collect(Collectors.toList());
+    }
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findPageDesc(int page, String filter, String word) {
+        if(filter.equals("title")) {
+            return postsRepository.findTitlePageDesc(page, "%"+word+"%").stream()
+                    .map(PostsListResponseDto::new) // == .map(posts -> new PostsListResponseDto(Posts))
+                    .collect(Collectors.toList());
+        }else{
+            return postsRepository.findAuthorPageDesc(page, "%"+word+"%").stream()
+                    .map(PostsListResponseDto::new) // == .map(posts -> new PostsListResponseDto(Posts))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public int allRowCount(){
+        return postsRepository.allRowCount();
+    }
+
+    @Transactional(readOnly = true)
+    public int allRowCount(String filter, String word){
+        if(filter.equals("title")) {
+            return postsRepository.allTitleRowCount("%"+word+"%");
+        }else{
+            return postsRepository.allAuthorRowCount("%"+word+"%");
+        }
     }
 
     @Transactional
