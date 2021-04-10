@@ -2,7 +2,6 @@ package org.me.springboot.web;
 
 import lombok.RequiredArgsConstructor;
 import org.me.springboot.domain.posts.Posts;
-import org.me.springboot.domain.posts.comments.Comments;
 import org.me.springboot.domain.posts.comments.CommentsId;
 import org.me.springboot.service.posts.PostsService;
 import org.me.springboot.service.posts.comments.CommentsService;
@@ -11,6 +10,7 @@ import org.me.springboot.web.dto.posts.PostsSaveRequestDto;
 import org.me.springboot.web.dto.posts.PostsUpdateRequestDto;
 import org.me.springboot.web.dto.posts.comments.CommentsSaveRequestDto;
 import org.me.springboot.web.dto.posts.comments.CommentsUpdateRequestDto;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor

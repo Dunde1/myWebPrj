@@ -28,20 +28,12 @@ public class IndexController {
         if(user != null) {
             model.addAttribute("user", user);
         }
-        return "/index";
+        return "index";
     }
 
     @GetMapping("/login")
-    public String login() {
-        return "/login";
-    }
-
-    @GetMapping("/error")
-    public String error(Model model, @LoginUser SessionUser user) {
-        if(user != null) {
-            model.addAttribute("user", user);
-        }
-        return "/error";
+    public String login(){
+        return "login";
     }
 
     @GetMapping("/posts/list")
@@ -54,7 +46,7 @@ public class IndexController {
 
     @GetMapping("/posts/list/{filter}/{word}/{page}")
     public String postsList(@PathVariable String filter, @PathVariable String word, @PathVariable int page, Model model, @LoginUser SessionUser user){
-        if(!(filter.equals("none")||filter.equals("title")||filter.equals("author"))) return "/error";
+        if(!(filter.equals("none")||filter.equals("title")||filter.equals("author"))) return "error";
 
         List<PostsListResponseDto> postsList;
         int allRowCount = 0;
@@ -67,7 +59,7 @@ public class IndexController {
             allRowCount = postsService.allRowCount(filter, word);
         }
 
-        if((page-1)*10>allRowCount) return "/error";
+        if((page-1)*10>allRowCount) return "error";
 
         class pageNumberC {
             int pgNum;
@@ -103,7 +95,7 @@ public class IndexController {
         if(user != null) {
             model.addAttribute("user", user);
         }
-        return "/posts/posts-list";
+        return "posts/posts-list";
     }
 
     @GetMapping("/posts/update/{id}")
@@ -117,6 +109,6 @@ public class IndexController {
         if(user != null) {
             model.addAttribute("user", user);
         }
-        return "/posts/posts-update";
+        return "posts/posts-update";
     }
 }
