@@ -1,0 +1,33 @@
+{{>layout/header}}
+
+<h1 class="h3 mb-2 text-gray-800">Api Test page 입니다.</h1>
+<p class="mb-4">Api를 요청해서 자료가 잘 오고가는지 테스트하세요.</p>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="font-weight-bold text-success mb-1">
+                    http://IpAddress:PortNumber/test/api/main/number
+                </div>
+                <div class="h5 mb-0 text-gray-800">
+                    request type : json<br>
+                    request args : String number1, String number2<br>
+                    &nbsp;- number1 과 number2 는 int 범위.<br><br>
+                    response type : json<br>
+                    response args : String add, String sub, String mul, String div<br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+{{>layout/footer}}
+
+<!-- index.js 추가 -->
+<script src="/js/app/testApi.js"></script>
+
+</body>
+
+</html>

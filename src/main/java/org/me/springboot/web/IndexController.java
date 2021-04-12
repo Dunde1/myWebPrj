@@ -111,4 +111,9 @@ public class IndexController {
         }
         return "posts/posts-update";
     }
+
+    @GetMapping("/test/api/main")
+    public String testApiMain() {
+        return "test/apiMain";
+    }
 }
