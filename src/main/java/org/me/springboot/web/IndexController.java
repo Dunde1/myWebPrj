@@ -116,4 +116,12 @@ public class IndexController {
     public String testApiMain() {
         return "test/apiMain";
     }
+
+    @GetMapping("/function/lotto")
+    public String lottoMain(Model model, @LoginUser SessionUser user) {
+        if(user != null) {
+            model.addAttribute("user", user);
+        }
+        return "lotto/lottoMain";
+    }
 }

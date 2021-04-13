@@ -68,6 +68,21 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
+            Function
+        </div>
+
+        <!-- Nav Item - Tables -->
+        <li class="nav-item">
+            <a class="nav-link" href="/function/lotto">
+                <i class="fab fa-fw fa-monero"></i>
+                <span>로또 추첨기</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
             Test
         </div>
 
@@ -351,6 +366,8 @@
                             {{#user}}
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{name}}</span>
                             <img class="img-profile rounded-circle" src="{{picture}}">
+                            <input type="hidden" id="user-id" value="{{name}}">
+                            <input type="hidden" id="user-email" value="{{email}}">
                             {{/user}}
                         </a>
                         <!-- Dropdown - User Information -->
