@@ -17,9 +17,7 @@ public class TestApiController {
     private final TestService testService;
 
     @PostMapping("/test/api/main/number")
-    public TestApiResponseDto apiTakeAndGive(@RequestBody TestApiRequestDto requestDto, HttpServletResponse response) {
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Headers", "origin, x-requested-with, content-type, accept");
+    public TestApiResponseDto apiTakeAndGive(@RequestBody TestApiRequestDto requestDto) {
         return testService.FourRuleCalculations(requestDto);
     }
 }
