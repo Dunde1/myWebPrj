@@ -1,48 +1,41 @@
 $(document).ready(function (){
+    load();
+});
+
+function load(){
     var data = {
         id: $('#user-id').val(),
         email: $('#user-email').val()
     };
 
-    alert($('#user-id').val()+ ' ' + $('#user-email').val())
-
-    if($('#getLottoList').val()=="OK") return
-
     $.ajax({
         type: 'POST',
-        url: 'http://192.168.0.10/mit/lottolist',
+        url: 'http://mit4.iptime.org:2780/mit/lottolist',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data)
     }).done(function (lottoList) {
-        alert('로또리스트'+lottoList);
-        alert('로또리스트json'+JSON.stringify(lottoList))
         readLotto(lottoList);
     }).fail(function (error) {
-        alert('첫번째 에러');
+        alert('Lotto추첨 Server 에러');
         alert(JSON.stringify(error));
         window.location.href = '/';
     });
-});
+}
 
 function readLotto(lottoList) {
-    lottoList = "";
     if(lottoList=="") {
-        lottoList = [{"lnum1":"X","lnum2":"X","lnum3":"X","lnum4":"X","lnum5":"X","lnum6":"X"}]
+        lottoList = [{"lnum1":"0","lnum2":"0","lnum3":"0","lnum4":"0","lnum5":"0","lnum6":"0"}];
     }
-    alert(JSON.stringify(lottoList));
 
-    $.ajax({
-        type: 'POST',
-        url: '/function/lottoList',
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(lottoList)
-    }).fail(function (error) {
-        alert('두번째 에러');
-        alert(JSON.stringify(error));
-        window.location.href = '/';
-    });
+    for (var lottos in lottoList) {
+        $('#tbody').append('<tr class="lottoBall">');
+        $('#tbody').append('<td class="lottoBall" style="text-align: center;font-size: 30px">'+(parseInt(lottos)+1)+'</td>');
+        for (var numbers in lottoList[lottos]) {
+            $('#tbody').append('<td class="lottoBall" style="text-align: center">'+ballStyle(parseInt(lottoList[lottos][numbers]))+'</td>');
+        }
+        $('#tbody').append('</tr>');
+    }
 }
 
 var lotto = {
@@ -58,18 +51,46 @@ var lotto = {
             email: $('#user-email').val()
         };
 
+        if($('#lotto-isRaffle').val()=='true'){
+            $('.lottoBall').detach();
+            load();
+        }
+
         $.ajax({
             type: 'POST',
-            url: 'http://192.168.0.10/mit/lottolist',
+            url: 'http://mit4.iptime.org:2780/mit/lotto',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
         }).done(function (data) {
-            $('#getLottoNumbers').val(data.lnum1 + data.lnum2 + data.lnum3 + data.lnum4 + data.lnum5 + data.lnum6);
+            $('#lotto-isRaffle').val('true');
+            $('#getLottoNumbers').append(ballStyle(parseInt(data['lnum1'])));
+            $('#getLottoNumbers').append(ballStyle(parseInt(data['lnum2'])));
+            $('#getLottoNumbers').append(ballStyle(parseInt(data['lnum3'])));
+            $('#getLottoNumbers').append(ballStyle(parseInt(data['lnum4'])));
+            $('#getLottoNumbers').append(ballStyle(parseInt(data['lnum5'])));
+            $('#getLottoNumbers').append(ballStyle(parseInt(data['lnum6'])));
         }).fail(function (error) {
-            alert(JSON.stringify(error))
+            alert(JSON.stringify('Lotto추첨 Server 에러'));
+            alert(JSON.stringify(error));
         });
     },
+}
+
+function ballStyle(number) {
+    if(number>=1&&number<=10){
+        return '<div class="btn-warning btn-circle mr-1 lottoBall" style="font-size: 20px">'+number+'</div>'
+    }else if(number>=11&&number<=20) {
+        return '<div class="btn-primary btn-circle mr-1 lottoBall" style="font-size: 20px">'+number+'</div>'
+    }else if(number>=21&&number<=30) {
+        return '<div class="btn-danger btn-circle mr-1 lottoBall" style="font-size: 20px">'+number+'</div>'
+    }else if(number>=31&&number<=40) {
+        return '<div class="btn-info btn-circle mr-1 lottoBall" style="font-size: 20px">'+number+'</div>'
+    }else if(number>=40){
+        return '<div class="btn-success btn-circle mr-1 lottoBall" style="font-size: 20px">'+number+'</div>'
+    }else if(number==0){
+        return '<div class="btn-success btn-circle mr-1 lottoBall" style="font-size: 20px">X</div>'
+    }
 }
 
 lotto.init();

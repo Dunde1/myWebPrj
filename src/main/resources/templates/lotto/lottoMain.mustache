@@ -1,44 +1,35 @@
 {{>layout/header}}
 
 <!-- Page Heading -->
-<input type="hidden" id="getLottoList" value="{{#lottoList}}OK{{/lottoList}}{{^lottoList}}null{{/lottoList}}">
-<h1 class="h3 mb-1 text-gray-800">로또 추첨기</h1>
+<input type="hidden" id="lotto-isRaffle" value="false">
+<img src="/img/lotto/lotto_banner.png" width="200px" height="100px">
 <p class="mb-4">
+    <br>
     로또 추첨기능입니다. 로또 추첨받기 기능과 사용내역을 볼 수 있습니다.<br>
     가장 상위에 있는 내역이 최근 내역입니다.
 </p>
 <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <div class="m-0 font-weight-bold text-primary">로또 추첨내역</div>
+                <div class="m-0 font-weight-bold text-primary">최근 로또 추첨내역</div>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered dataTable" cellspacing="0" role="grid" style="width: 100%;">
+                <div class="table-responsive p-3">
+                    <table class="table table-bordered dataTable" role="grid" style="width: 100%;border-collapse: separate; border-spacing: 0 5px">
                         <tbody id="tbody">
-                        {{#lottoList}}
-                        <tr>
-                            <td style="text-align: center">{{lnum1}}</td>
-                            <td style="text-align: center">{{lnum2}}</td>
-                            <td style="text-align: center">{{lnum3}}</td>
-                            <td style="text-align: center">{{lnum4}}</td>
-                            <td style="text-align: center">{{lnum5}}</td>
-                            <td style="text-align: center">{{lnum6}}</td>
-                        </tr>
-                        {{/lottoList}}
                         </tbody>
                     </table>
                 </div>
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <button class="btn btn-primary" id="btn-lotto">추첨</button>
                     </div>
-                    <div class="col-md-8">
-                        <div style="text-align: center" id="getLottoNumbers">1, 2, 3, 4, 5, 6</div>
+                    <div class="col-md-6">
+                        <div style="text-align: center" id="getLottoNumbers"></div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <a class="btn btn-info" href="http://192.168.0.10/" style="float: right">홈페이지</a>
                     </div>
                 </div>
