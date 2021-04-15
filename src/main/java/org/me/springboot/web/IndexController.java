@@ -3,6 +3,7 @@ package org.me.springboot.web;
 import lombok.RequiredArgsConstructor;
 import org.me.springboot.config.auth.LoginUser;
 import org.me.springboot.config.auth.dto.SessionUser;
+import org.me.springboot.service.function.bitcoin.BitcoinService;
 import org.me.springboot.service.posts.PostsService;
 import org.me.springboot.service.posts.comments.CommentsService;
 import org.me.springboot.web.dto.posts.PostsListResponseDto;
@@ -22,6 +23,7 @@ public class IndexController {
 
     private final PostsService postsService;
     private final CommentsService commentsService;
+    private final BitcoinService bitcoinService;
 
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user) {
@@ -127,6 +129,8 @@ public class IndexController {
 
     @GetMapping("/function/bitcoin")
     public String bitcoinMain(Model model, @LoginUser SessionUser user) {
+        model.addAttribute("wallet", bitcoinService.walletCreate(user));
+
         if(user != null) {
             model.addAttribute("user", user);
         }

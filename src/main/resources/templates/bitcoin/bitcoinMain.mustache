@@ -1,26 +1,49 @@
 {{>layout/header}}
-<img src="img/bitcoins/banner.png" width="200px" height="100px">
+
+<img src="/img/bitcoins/banner.png" width="200px" height="100px">
 
 <!-- 첫번째 줄 -->
 <div class="row">
+    <div class="col-md-2">
+        <div class="mt-3" id="status" style="text-align: center; color: RoyalBlue">btc 100 매도 완료</div>
+    </div>
     <!-- btc 줄 -->
-    <div class="col-md-2"></div>
     <div class="col-md-2">
         <div class="card shadow mb-4">
             <div class="card-header py-3" style="text-align: center">
-                <img src="img/bitcoins/btc.png">
+                <img src="/img/bitcoins/btc.png" title="bitcoin (btc)">
             </div>
             <div class="card-body">
                 <div class="p-2">
-                    <div id="btc" style="text-align: center; font-size: 20px; font-weight: bold">100000000</div>
+                    <div id="btc" style="text-align: center; font-size: 20px; font-weight: bold">-</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <input type="number" value="0" id="btc-amount" style="font-size: 10px; width: 100%">
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <input type="number" value="{{wallet.btc}}" id="btc-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <div class="btn btn-success" onclick="">전량</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-info" onclick="">절반</div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="btn btn-danger" onclick="">매수</div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="text-align: right">
                         <div class="btn btn-primary" onclick="">매도</div>
                     </div>
+                </div>
+                <div class="mt-2" style="text-align: center">
+                    <div id="btc-avg">평단가</div>
+                    <div id="btc-PL">손익</div>
                 </div>
             </div>
         </div>
@@ -28,15 +51,40 @@
     <!-- bch 줄 -->
     <div class="col-md-2">
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <div class="m-0 font-weight-bold text-primary">코인 시세</div>
+            <div class="card-header py-3" style="text-align: center">
+                <img src="/img/bitcoins/bch.png" title="bitcoin cash (bch)">
             </div>
             <div class="card-body">
-                <div class="table-responsive p-2">
-
+                <div class="p-2">
+                    <div id="bch" style="text-align: center; font-size: 20px; font-weight: bold">-</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <input type="number" value="0" id="bch-amount" style="font-size: 10px; width: 100%">
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <input type="number" value="{{wallet.bch}}" id="bch-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <div class="btn btn-success" onclick="">전량</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-info" onclick="">절반</div>
+                    </div>
                 </div>
                 <div class="row">
-
+                    <div class="col-md-6">
+                        <div class="btn btn-danger" onclick="">매수</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-primary" onclick="">매도</div>
+                    </div>
+                </div>
+                <div class="mt-2" style="text-align: center">
+                    <div id="bch-avg">평단가</div>
+                    <div id="bch-PL">손익</div>
                 </div>
             </div>
         </div>
@@ -44,15 +92,40 @@
     <!-- btg 줄 -->
     <div class="col-md-2">
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <div class="m-0 font-weight-bold text-primary">코인 시세</div>
+            <div class="card-header py-3" style="text-align: center">
+                <img src="/img/bitcoins/btg.png" title="bitcoin gold (btg)">
             </div>
             <div class="card-body">
-                <div class="table-responsive p-2">
-
+                <div class="p-2">
+                    <div id="btg" style="text-align: center; font-size: 20px; font-weight: bold">-</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <input type="number" value="0" id="btg-amount" style="font-size: 10px; width: 100%">
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <input type="number" value="{{wallet.btg}}" id="btg-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <div class="btn btn-success" onclick="">전량</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-info" onclick="">절반</div>
+                    </div>
                 </div>
                 <div class="row">
-
+                    <div class="col-md-6">
+                        <div class="btn btn-danger" onclick="">매수</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-primary" onclick="">매도</div>
+                    </div>
+                </div>
+                <div class="mt-2" style="text-align: center">
+                    <div id="btg-avg">평단가</div>
+                    <div id="btg-PL">손익</div>
                 </div>
             </div>
         </div>
@@ -60,15 +133,40 @@
     <!-- eos 줄 -->
     <div class="col-md-2">
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <div class="m-0 font-weight-bold text-primary">코인 시세</div>
+            <div class="card-header py-3" style="text-align: center">
+                <img src="/img/bitcoins/eos.png" title="EOS (eos)">
             </div>
             <div class="card-body">
-                <div class="table-responsive p-2">
-
+                <div class="p-2">
+                    <div id="eos" style="text-align: center; font-size: 20px; font-weight: bold">-</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <input type="number" value="0" id="eos-amount" style="font-size: 10px; width: 100%">
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <input type="number" value="{{wallet.eos}}" id="eos-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <div class="btn btn-success" onclick="">전량</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-info" onclick="">절반</div>
+                    </div>
                 </div>
                 <div class="row">
-
+                    <div class="col-md-6">
+                        <div class="btn btn-danger" onclick="">매수</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-primary" onclick="">매도</div>
+                    </div>
+                </div>
+                <div class="mt-2" style="text-align: center">
+                    <div id="eos-avg">평단가</div>
+                    <div id="eos-PL">손익</div>
                 </div>
             </div>
         </div>
@@ -77,19 +175,44 @@
 </div>
 <!-- 두번째 줄 -->
 <div class="row">
-    <!-- etc 줄 -->
     <div class="col-md-2"></div>
+    <!-- etc 줄 -->
     <div class="col-md-2">
         <div class="card shadow mb-4">
             <div class="card-header py-3" style="text-align: center">
-                <img src="img/bitcoins/btc.png">
+                <img src="/img/bitcoins/etc.png" title="Ethereum Classic (etc)">
             </div>
             <div class="card-body">
-                <div class="table-responsive p-2">
-
+                <div class="p-2">
+                    <div id="etc" style="text-align: center; font-size: 20px; font-weight: bold">-</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <input type="number" value="0" id="etc-amount" style="font-size: 10px; width: 100%">
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <input type="number" value="{{wallet.etc}}" id="etc-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <div class="btn btn-success" onclick="">전량</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-info" onclick="">절반</div>
+                    </div>
                 </div>
                 <div class="row">
-
+                    <div class="col-md-6">
+                        <div class="btn btn-danger" onclick="">매수</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-primary" onclick="">매도</div>
+                    </div>
+                </div>
+                <div class="mt-2" style="text-align: center">
+                    <div id="etc-avg">평단가</div>
+                    <div id="etc-PL">손익</div>
                 </div>
             </div>
         </div>
@@ -97,15 +220,40 @@
     <!-- eth 줄 -->
     <div class="col-md-2">
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <div class="m-0 font-weight-bold text-primary">코인 시세</div>
+            <div class="card-header py-3" style="text-align: center">
+                <img src="/img/bitcoins/eth.png" title="Ethereum (eth)">
             </div>
             <div class="card-body">
-                <div class="table-responsive p-2">
-
+                <div class="p-2">
+                    <div id="eth" style="text-align: center; font-size: 20px; font-weight: bold">-</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <input type="number" value="0" id="eth-amount" style="font-size: 10px; width: 100%">
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <input type="number" value="{{wallet.eth}}" id="eth-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <div class="btn btn-success" onclick="">전량</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-info" onclick="">절반</div>
+                    </div>
                 </div>
                 <div class="row">
-
+                    <div class="col-md-6">
+                        <div class="btn btn-danger" onclick="">매수</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-primary" onclick="">매도</div>
+                    </div>
+                </div>
+                <div class="mt-2" style="text-align: center">
+                    <div id="eth-avg">평단가</div>
+                    <div id="eth-PL">손익</div>
                 </div>
             </div>
         </div>
@@ -113,15 +261,40 @@
     <!-- ltc 줄 -->
     <div class="col-md-2">
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <div class="m-0 font-weight-bold text-primary">코인 시세</div>
+            <div class="card-header py-3" style="text-align: center">
+                <img src="/img/bitcoins/ltc.png" title="Light coin (ltc)">
             </div>
             <div class="card-body">
-                <div class="table-responsive p-2">
-
+                <div class="p-2">
+                    <div id="ltc" style="text-align: center; font-size: 20px; font-weight: bold">-</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <input type="number" value="0" id="ltc-amount" style="font-size: 10px; width: 100%">
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <input type="number" value="{{wallet.ltc}}" id="ltc-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <div class="btn btn-success" onclick="">전량</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-info" onclick="">절반</div>
+                    </div>
                 </div>
                 <div class="row">
-
+                    <div class="col-md-6">
+                        <div class="btn btn-danger" onclick="">매수</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-primary" onclick="">매도</div>
+                    </div>
+                </div>
+                <div class="mt-2" style="text-align: center">
+                    <div id="ltc-avg">평단가</div>
+                    <div id="ltc-PL">손익</div>
                 </div>
             </div>
         </div>
@@ -129,15 +302,40 @@
     <!-- xrp 줄 -->
     <div class="col-md-2">
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <div class="m-0 font-weight-bold text-primary">코인 시세</div>
+            <div class="card-header py-3" style="text-align: center">
+                <img src="/img/bitcoins/xrp.png" title="Ripple (xrp)">
             </div>
             <div class="card-body">
-                <div class="table-responsive p-2">
-
+                <div class="p-2">
+                    <div id="xrp" style="text-align: center; font-size: 20px; font-weight: bold">-</div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <input type="number" value="0" id="xrp-amount" style="font-size: 10px; width: 100%">
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <input type="number" value="{{wallet.xrp}}" id="xrp-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <div class="btn btn-success" onclick="">전량</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-info" onclick="">절반</div>
+                    </div>
                 </div>
                 <div class="row">
-
+                    <div class="col-md-6">
+                        <div class="btn btn-danger" onclick="">매수</div>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <div class="btn btn-primary" onclick="">매도</div>
+                    </div>
+                </div>
+                <div class="mt-2" style="text-align: center">
+                    <div id="xrp-avg">평단가</div>
+                    <div id="xrp-PL">손익</div>
                 </div>
             </div>
         </div>
@@ -167,11 +365,11 @@
                         </thead>
                         <tbody id="tbody">
                         <tr>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
+                            <td id="accountValue">-</td>
+                            <td id="cash">{{wallet.cash}}</td>
+                            <td id="coinAllValue">-</td>
+                            <td id="loan">{{wallet.loan}}</td>
+                            <td id="totalAccountValue">-</td>
                         </tr>
                         </tbody>
                     </table>
@@ -188,15 +386,6 @@
     </div>
     <div class="col-md-2"></div>
 </div>
-</div>
-<div id="btc">0</div>
-<div id="bch">0</div>
-<div id="btg">0</div>
-<div id="eos">0</div>
-<div id="etc">0</div>
-<div id="eth">0</div>
-<div id="ltc">0</div>
-<div id="xrp">0</div>
 
 <!-- 그래프 참고 주소 https://www.bithumb.com/ -->
 {{>layout/footer}}

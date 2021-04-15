@@ -1,19 +1,30 @@
-package org.me.springboot.service.function;
+package org.me.springboot.service.function.bitcoin;
 
 import lombok.RequiredArgsConstructor;
+import org.me.springboot.config.auth.dto.SessionUser;
+import org.me.springboot.domain.wallet.Wallet;
+import org.me.springboot.domain.wallet.WalletRepository;
+import org.me.springboot.domain.user.User;
+import org.me.springboot.domain.user.UserRepository;
 import org.me.springboot.web.dto.bitcoin.CoinInfoResponseDto;
 import org.me.springboot.web.dto.bitcoin.CoinInfosWebClientDto;
+import org.me.springboot.web.dto.wallet.WalletResponseDto;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
+import javax.transaction.Transactional;
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @PropertySource("classpath:application.yml")
 @Service
-public class CoinService {
+public class BitcoinService {
 
+    private final UserRepository userRepository;
+    private final WalletRepository walletRepository;
     private final Environment environment;
 
     public CoinInfoResponseDto getCoinInfos(){
@@ -38,5 +49,22 @@ public class CoinService {
                 .ltcPrice(ltcMono.blockFirst().getResult().get("price"))
                 .xrpPrice(xrpMono.blockFirst().getResult().get("price"))
                 .build();
+    }
+
+    @Transactional
+    public WalletResponseDto walletCreate(SessionUser suser){
+        Optional<User> ouser = userRepository.findByEmail(suser.getEmail());
+        User user = ouser.get();
+        Optional<Wallet> owallet = walletRepository.findByUser(user);
+        if(owallet.isPresent()) {
+            return new WalletResponseDto(owallet.get());
+        }else {
+            WalletResponseDto walletResponseDto = WalletResponseDto.builder()
+                    .user(user)
+                    .cash(100000000l).loan(0l)
+                    .btc(0l).bch(0l).btg(0l).eos(0l).etc(0l).eth(0l).ltc(0l).xrp(0l).build();
+            walletRepository.save(walletResponseDto.toEntity());
+            return walletResponseDto;
+        }
     }
 }

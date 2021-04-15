@@ -6,6 +6,7 @@ coinUpdate = setInterval(function () {
     coinPrice();
 }, 3000);
 
+var isStart = false;
 function coinPrice(){
     $.ajax({
         type: 'POST',
@@ -19,9 +20,18 @@ function coinPrice(){
         $('#eth').text(bitcoinInfo['ethPrice']);
         $('#ltc').text(bitcoinInfo['ltcPrice']);
         $('#xrp').text(bitcoinInfo['xrpPrice']);
+        isStart = true;
     }).fail(function (error) {
         alert('bitcoin server error');
         alert(JSON.stringify(error));
         window.location.href = '/';
     });
+}
+
+var open = {
+    init : function () {
+        if(!isStart) return
+        var _this = this;
+
+    }
 }
