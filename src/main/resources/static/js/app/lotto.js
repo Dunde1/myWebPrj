@@ -58,7 +58,7 @@ var lotto = {
 
         $.ajax({
             type: 'POST',
-            url: 'http://mit4.iptime.org:2780/mit/lotto',
+            url: 'http://192.168.0.10/mit/lotto', // 'http://mit4.iptime.org:2780/mit/lotto',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)

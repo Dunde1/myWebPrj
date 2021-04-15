@@ -124,4 +124,12 @@ public class IndexController {
         }
         return "lotto/lottoMain";
     }
+
+    @GetMapping("/function/bitcoin")
+    public String bitcoinMain(Model model, @LoginUser SessionUser user) {
+        if(user != null) {
+            model.addAttribute("user", user);
+        }
+        return "bitcoin/bitcoinMain";
+    }
 }
