@@ -2,10 +2,14 @@ package org.me.springboot.service.function.bitcoin;
 
 import lombok.RequiredArgsConstructor;
 import org.me.springboot.config.auth.dto.SessionUser;
+import org.me.springboot.domain.bitcoin.BitcoinLog;
+import org.me.springboot.domain.bitcoin.BitcoinLogRepository;
 import org.me.springboot.domain.wallet.Wallet;
 import org.me.springboot.domain.wallet.WalletRepository;
 import org.me.springboot.domain.user.User;
 import org.me.springboot.domain.user.UserRepository;
+import org.me.springboot.web.dto.bitcoin.BitcoinDealrequestDto;
+import org.me.springboot.web.dto.bitcoin.BitcoinLogResponseDto;
 import org.me.springboot.web.dto.bitcoin.CoinInfoResponseDto;
 import org.me.springboot.web.dto.bitcoin.CoinInfosWebClientDto;
 import org.me.springboot.web.dto.wallet.WalletResponseDto;
@@ -16,7 +20,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @PropertySource("classpath:application.yml")
@@ -25,6 +31,7 @@ public class BitcoinService {
 
     private final UserRepository userRepository;
     private final WalletRepository walletRepository;
+    private final BitcoinLogRepository bitcoinLogRepository;
     private final Environment environment;
 
     public CoinInfoResponseDto getCoinInfos(){
@@ -61,10 +68,30 @@ public class BitcoinService {
         }else {
             WalletResponseDto walletResponseDto = WalletResponseDto.builder()
                     .user(user)
-                    .cash(100000000l).loan(0l)
+                    .cash(100000000l).loan(100000000l)
                     .btc(0l).bch(0l).btg(0l).eos(0l).etc(0l).eth(0l).ltc(0l).xrp(0l).build();
             walletRepository.save(walletResponseDto.toEntity());
             return walletResponseDto;
         }
+    }
+
+    @Transactional
+    public List<BitcoinLogResponseDto> bitcoinLogGetAll(String email){
+        Optional<User> ouser = userRepository.findByEmail(email);
+        User user = ouser.get();
+        return bitcoinLogRepository.findByUser(user).stream()
+                .map(BitcoinLogResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void bitcoinDealUpdate(BitcoinDealrequestDto bitcoinDealrequestDto){
+        User user = userRepository.findByEmail(bitcoinDealrequestDto.getUserEmail()).get();
+        Wallet wallet = walletRepository.findByUser(user).get();
+
+        switch (bitcoinDealrequestDto)
+
+
+        bitcoinLogRepository.save(BitcoinLog.builder().user(user).coins(co))
     }
 }

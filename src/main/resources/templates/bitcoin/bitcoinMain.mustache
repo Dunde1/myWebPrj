@@ -1,10 +1,20 @@
 {{>layout/header}}
+<style>
+    .dataTables_filter {
+        text-align: right;
+    }
+    .pagination {
+        float: right;
+    }
+</style>
+
 
 <img src="/img/bitcoins/banner.png" width="200px" height="100px">
 
 <!-- 첫번째 줄 -->
 <div class="row">
     <div class="col-md-2">
+        <a class="btn btn-info mt-2" href="https://www.bithumb.com/">코인 정보</a>
         <div class="mt-3" id="status" style="text-align: center; color: RoyalBlue">btc 100 매도 완료</div>
     </div>
     <!-- btc 줄 -->
@@ -27,10 +37,10 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <div class="btn btn-success" onclick="">전량</div>
+                        <div class="btn btn-success" onclick="amountCoin('btc','전량')">전량</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-info" onclick="">절반</div>
+                        <div class="btn btn-info" onclick="amountCoin('btc','절반')">절반</div>
                     </div>
                 </div>
                 <div class="row">
@@ -68,10 +78,10 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <div class="btn btn-success" onclick="">전량</div>
+                        <div class="btn btn-success" onclick="amountCoin('bch','전량')">전량</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-info" onclick="">절반</div>
+                        <div class="btn btn-info" onclick="amountCoin('bch','절반')">절반</div>
                     </div>
                 </div>
                 <div class="row">
@@ -109,10 +119,10 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <div class="btn btn-success" onclick="">전량</div>
+                        <div class="btn btn-success" onclick="amountCoin('btg','전량')">전량</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-info" onclick="">절반</div>
+                        <div class="btn btn-info" onclick="amountCoin('btg','절반')">절반</div>
                     </div>
                 </div>
                 <div class="row">
@@ -150,10 +160,10 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <div class="btn btn-success" onclick="">전량</div>
+                        <div class="btn btn-success" onclick="amountCoin('eos','전량')">전량</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-info" onclick="">절반</div>
+                        <div class="btn btn-info" onclick="amountCoin('eos','절반')">절반</div>
                     </div>
                 </div>
                 <div class="row">
@@ -196,10 +206,10 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <div class="btn btn-success" onclick="">전량</div>
+                        <div class="btn btn-success" onclick="amountCoin('etc','전량')">전량</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-info" onclick="">절반</div>
+                        <div class="btn btn-info" onclick="amountCoin('etc','절반')">절반</div>
                     </div>
                 </div>
                 <div class="row">
@@ -237,10 +247,10 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <div class="btn btn-success" onclick="">전량</div>
+                        <div class="btn btn-success" onclick="amountCoin('eth','전량')">전량</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-info" onclick="">절반</div>
+                        <div class="btn btn-info" onclick="amountCoin('eth','절반')">절반</div>
                     </div>
                 </div>
                 <div class="row">
@@ -278,10 +288,10 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <div class="btn btn-success" onclick="">전량</div>
+                        <div class="btn btn-success" onclick="amountCoin('ltc','전량')">전량</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-info" onclick="">절반</div>
+                        <div class="btn btn-info" onclick="amountCoin('ltc','절반')">절반</div>
                     </div>
                 </div>
                 <div class="row">
@@ -319,10 +329,10 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <div class="btn btn-success" onclick="">전량</div>
+                        <div class="btn btn-success" onclick="amountCoin('xrp','전량')">전량</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-info" onclick="">절반</div>
+                        <div class="btn btn-info" onclick="amountCoin('xrp','절반')">절반</div>
                     </div>
                 </div>
                 <div class="row">
@@ -360,7 +370,7 @@
                             <th>현금</th>
                             <th>코인가치 총액</th>
                             <th>대출금</th>
-                            <th>총 계좌합계</th>
+                            <th>순이익</th>
                         </tr>
                         </thead>
                         <tbody id="tbody">
@@ -374,12 +384,34 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                    </div>
-                    <div class="col-md-6">
-                        <a class="btn btn-info" href="http://192.168.0.10/" style="float: right">거래이력</a>
-                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+<!--계좌 끝-->
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">거래이력</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive p-3">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>일시</th>
+                            <th>코인</th>
+                            <th>거래구분</th>
+                            <th>갯수</th>
+                            <th>개당가격</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody-Log">
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -392,6 +424,13 @@
 
 <!-- index.js 추가 -->
 <script src="/js/app/bitcoin.js"></script>
+
+<!-- Page level plugins -->
+<script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="/js/demo/datatables-demo.js"></script>
 
 </body>
 
