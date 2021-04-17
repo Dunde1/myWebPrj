@@ -1,6 +1,7 @@
 let isStart = false;
 let bitcoinLogs;
 let coins = ["btc","bch","btg","eos","etc","eth","ltc","xrp"];
+let fees = 0.0005; //0.05%
 
 //매시간마다 코인가격 가져오기
 function coinPrice(){
@@ -44,7 +45,7 @@ function accountRefresh(){
     let totalAccountValue = accountValue-loan;
 
     $('#accountValue').text(accountValue);
-    $('#coinAllValue').text(coinAllValue);
+    $('#coinAllValue').text(Math.round(coinAllValue-coinAllValue*fees));
     $('#totalAccountValue').text(totalAccountValue);
 }
 
@@ -102,22 +103,11 @@ function logAnalysis(){
 
 //손익 계산
 function calPL(){
-    if($('#btc-avg').text()=='-') $('#btc-PL').text('-');
-    else $('#btc-PL').text(parseInt($('#btc-avg').text()) - parseInt($('#btc').text()));
-    if($('#bch-avg').text()=='-') $('#bch-PL').text('-');
-    else $('#bch-PL').text(parseInt($('#bch-avg').text()) - parseInt($('#bch').text()));
-    if($('#btg-avg').text()=='-') $('#btg-PL').text('-');
-    else $('#btg-PL').text(parseInt($('#btg-avg').text()) - parseInt($('#btg').text()));
-    if($('#eos-avg').text()=='-') $('#eos-PL').text('-');
-    else $('#eos-PL').text(parseInt($('#eos-avg').text()) - parseInt($('#eos').text()));
-    if($('#etc-avg').text()=='-') $('#etc-PL').text('-');
-    else $('#etc-PL').text(parseInt($('#etc-avg').text()) - parseInt($('#etc').text()));
-    if($('#eth-avg').text()=='-') $('#eth-PL').text('-');
-    else $('#eth-PL').text(parseInt($('#eth-avg').text()) - parseInt($('#eth').text()));
-    if($('#ltc-avg').text()=='-') $('#ltc-PL').text('-');
-    else $('#ltc-PL').text(parseInt($('#ltc-avg').text()) - parseInt($('#ltc').text()));
-    if($('#xrp-avg').text()=='-') $('#xrp-PL').text('-');
-    else $('#xrp-PL').text(parseInt($('#xrp-avg').text()) - parseInt($('#xrp').text()));
+    for(let idx in coins){
+        if($('#'+coins[idx]+'-avg').text()=='-') $('#'+coins[idx]+'-PL').text('-');
+        else $('#'+coins[idx]+'-PL').text(Math.round(parseInt($('#'+coins[idx]+'').text()) - parseInt($('#'+coins[idx]+'-avg').text())
+            - (parseInt($('#'+coins[idx]+'-avg').text())*fees)));
+    }
 }
 
 //갯수적용
@@ -167,7 +157,7 @@ function economy(coin, trading){
             alert('보유코인보다 많습니다.');
             return
         }
-        $('#cash').text(nowCash+totalPrice);
+        $('#cash').text(nowCash+(Math.round(totalPrice-totalPrice*fees)));  //수수료 적용
         $('#'+coin+'-reserve').val(reserveCoin-amount);
         amount *= -1;
         order = '매도';
@@ -192,7 +182,7 @@ function economy(coin, trading){
         accountRefresh();
         logAnalysis();
         calPL();
-        alert(coin+" "+amount+"개 "+order+"주문"+"완료");
+        alert(coin+" "+Math.abs(amount)+"개 "+order+"주문"+"완료");
     }).fail(function (error) {
         $('#cash').text(nowCash);
         $('#'+coin+'-reserve').val(reserveCoin);
