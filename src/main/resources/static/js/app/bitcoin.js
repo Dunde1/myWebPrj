@@ -1,5 +1,6 @@
 let isStart = false;
 let bitcoinLogs;
+let coins = ["btc","bch","btg","eos","etc","eth","ltc","xrp"];
 
 //매시간마다 코인가격 가져오기
 function coinPrice(){
@@ -54,18 +55,16 @@ function loadBitcoinLog(){
         url: '/bitcoin/api/bitcoinLog/'+$('#user-email').val()
     }).done(function (Log){
         bitcoinLogs = Log;
-        if(Log=="") {
-            $('#dataTable').DataTable().row.add(['-','-','-','-','-']).draw();
-            return
-        }
+        logAnalysis();
+        if(Log=="") return
         for (let logs in Log){
-            $('#dataTable').DataTable().row.add([Log[logs]['createdDate'],
+            $('#dataTable').DataTable().row.add([
+                Log[logs]['createdDate'],
                 Log[logs]['coins'],
                 Log[logs]['order'],
                 Log[logs]['amount'],
                 Log[logs]['value']]).draw();
         }
-        logAnalysis();
     }).fail(function (error) {
         alert('Log server error');
         alert(JSON.stringify(error));
@@ -80,36 +79,45 @@ function logAnalysis(){
     let amounts = {"btc":0, "bch":0, "btg":0, "eos":0, "etc":0, "eth":0, "ltc":0, "xrp":0};
 
     for(let logs in bitcoinLogs){
+
         let coin = bitcoinLogs[logs]['coins'];
+        let amount = parseInt(bitcoinLogs[logs]['amount']);
+        let value = parseInt(bitcoinLogs[logs]['value']);
+
         if(bitcoinLogs[logs]['order']=='매수') {
-            amounts[coin] += parseInt(bitcoinLogs[logs]['amount']);
-            buyValues[coin] += parseInt(bitcoinLogs[logs]['value']) * parseInt(bitcoinLogs[logs]['amount']);
+            amounts[coin] += amount;
+            buyValues[coin] += value * amount;
             avgs[coin] = buyValues[coin] / amounts[coin];
         }else{
-            amounts[coin] -= parseInt(bitcoinLogs[logs]['amount']);
-            buyValues[coin] -= avgs[coin] * amounts[coin];
+            amounts[coin] -= amount;
+            buyValues[coin] -= avgs[coin] * amount;
         }
     }
-    $('#btc-avg').text(avgs['btc']);
-    $('#bch-avg').text(avgs['bch']);
-    $('#btg-avg').text(avgs['btg']);
-    $('#eos-avg').text(avgs['eos']);
-    $('#etc-avg').text(avgs['etc']);
-    $('#eth-avg').text(avgs['eth']);
-    $('#ltc-avg').text(avgs['ltc']);
-    $('#xrp-avg').text(avgs['xrp']);
+
+    for(let idx in coins){
+        if(amounts[coins[idx]]==0) $('#'+coins[idx]+'-avg').text('-');
+        else $('#'+coins[idx]+'-avg').text(Math.round(avgs[coins[idx]]*100)/100);
+    }
 }
 
 //손익 계산
 function calPL(){
-    $('#btc-PL').text(parseInt($('#btc').text()) - parseInt($('#btc-avg').text()));
-    $('#bch-PL').text(parseInt($('#bch').text()) - parseInt($('#bch-avg').text()));
-    $('#btg-PL').text(parseInt($('#btg').text()) - parseInt($('#btg-avg').text()));
-    $('#eos-PL').text(parseInt($('#eos').text()) - parseInt($('#eos-avg').text()));
-    $('#etc-PL').text(parseInt($('#etc').text()) - parseInt($('#etc-avg').text()));
-    $('#eth-PL').text(parseInt($('#eth').text()) - parseInt($('#eth-avg').text()));
-    $('#ltc-PL').text(parseInt($('#ltc').text()) - parseInt($('#ltc-avg').text()));
-    $('#xrp-PL').text(parseInt($('#xrp').text()) - parseInt($('#xrp-avg').text()));
+    if($('#btc-avg').text()=='-') $('#btc-PL').text('-');
+    else $('#btc-PL').text(parseInt($('#btc-avg').text()) - parseInt($('#btc').text()));
+    if($('#bch-avg').text()=='-') $('#bch-PL').text('-');
+    else $('#bch-PL').text(parseInt($('#bch-avg').text()) - parseInt($('#bch').text()));
+    if($('#btg-avg').text()=='-') $('#btg-PL').text('-');
+    else $('#btg-PL').text(parseInt($('#btg-avg').text()) - parseInt($('#btg').text()));
+    if($('#eos-avg').text()=='-') $('#eos-PL').text('-');
+    else $('#eos-PL').text(parseInt($('#eos-avg').text()) - parseInt($('#eos').text()));
+    if($('#etc-avg').text()=='-') $('#etc-PL').text('-');
+    else $('#etc-PL').text(parseInt($('#etc-avg').text()) - parseInt($('#etc').text()));
+    if($('#eth-avg').text()=='-') $('#eth-PL').text('-');
+    else $('#eth-PL').text(parseInt($('#eth-avg').text()) - parseInt($('#eth').text()));
+    if($('#ltc-avg').text()=='-') $('#ltc-PL').text('-');
+    else $('#ltc-PL').text(parseInt($('#ltc-avg').text()) - parseInt($('#ltc').text()));
+    if($('#xrp-avg').text()=='-') $('#xrp-PL').text('-');
+    else $('#xrp-PL').text(parseInt($('#xrp-avg').text()) - parseInt($('#xrp').text()));
 }
 
 //갯수적용
@@ -121,13 +129,16 @@ function amountCoin(coin, amount) {
     }
 }
 
-//로그 저장
+//로그화면에 저장
 function saveBitcoinLog(coin, trading, amount, price){
     let d = new Date();
     let month = parseInt(d.getMonth())+1;
     if(month<10) month = '0'+month;
     let datetime = ''+d.getFullYear()+'-'+month+'-'+d.getDate()+'T'+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
-    $('#dataTable').DataTable().row.add([datetime,coin,trading,amount,price]).draw()
+    amount = Math.abs(amount);
+
+    $('#dataTable').DataTable().row.add([datetime,coin,trading,amount,price]).draw();
+    bitcoinLogs.push({'createdDate':datetime, 'coins':coin, 'order':trading, 'amount':amount,'value':price});
 }
 
 //매수매도 버튼 작동
@@ -162,29 +173,33 @@ function economy(coin, trading){
         order = '매도';
     }
 
-    let requestData = [{"userEmail":$('#user-email').val()},
-        {
-            "cash":$('#cash').text(),
-            "coinAmount":$('#'+coin+'-reserve').val(),
-            "coins":coin
-        },{
-            "coins":coin,
-            "amount":amount,
-            "value":nowPrice
-        }]
+    let requestData = {
+        "userEmail":$('#user-email').val(),
+        "coins":coin,
+        "amount":amount,
+        "value":nowPrice,
+        "cash":$('#cash').text(),
+        "coinAmount":$('#'+coin+'-reserve').val()
+    }
 
     $.ajax({
         type: 'POST',
         url: '/bitcoin/api/bitcoinDealUpdate',
-        data: JSON.stringify(requestData)
+        data: JSON.stringify(requestData),
+        contentType: 'application/json; charset=UTF-8'
+    }).done(function (data) {
+        saveBitcoinLog(coin, order, amount, nowPrice);
+        accountRefresh();
+        logAnalysis();
+        calPL();
+        alert(coin+" "+amount+"개 "+order+"주문"+"완료");
     }).fail(function (error) {
+        $('#cash').text(nowCash);
+        $('#'+coin+'-reserve').val(reserveCoin);
         alert('Main server error');
         alert(JSON.stringify(error));
         return
     });
-
-    saveBitcoinLog(coin, order, amount, nowPrice);
-    accountRefresh();
 }
 
 $(document).ready(function (){
@@ -194,4 +209,4 @@ $(document).ready(function (){
 
 coinUpdate = setInterval(function () {
     coinPrice();
-}, 10000); //3000
+}, 1000);

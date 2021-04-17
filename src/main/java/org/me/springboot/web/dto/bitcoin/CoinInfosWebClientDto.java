@@ -4,17 +4,23 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Map;
 
 @Getter
 @NoArgsConstructor
 public class CoinInfosWebClientDto {
-    private Map<String, String> result;
-    private Map<String, String> allowance;
+    private String status;
+    private List<Map<String, String>> data;
 
     @Builder
-    public CoinInfosWebClientDto(Map result, Map allowance) {
-        this.result = result;
-        this.allowance =allowance;
+    public CoinInfosWebClientDto(String status, List<Map<String, String>> data) {
+        this.status = status;
+        this.data = data;
+    }
+
+    public String getPrice(){
+        int lastIdx = data.size()-1;
+        return data.get(lastIdx).get("price");
     }
 }

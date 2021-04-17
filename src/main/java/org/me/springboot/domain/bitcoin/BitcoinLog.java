@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-public class BitcoinLog{
+public class BitcoinLog extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,10 +37,6 @@ public class BitcoinLog{
 
     @Column(nullable = false)
     private Long value;
-
-    @CreatedDate
-    @Column(nullable = false)
-    private LocalDateTime createdDate;
 
     @Builder
     public BitcoinLog(User user, Coins coins, Long amount, Long value){

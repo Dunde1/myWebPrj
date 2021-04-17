@@ -15,7 +15,6 @@
 <div class="row">
     <div class="col-md-2">
         <a class="btn btn-info mt-2" href="https://www.bithumb.com/">코인 정보</a>
-        <div class="mt-3" id="status" style="text-align: center; color: RoyalBlue">btc 100 매도 완료</div>
     </div>
     <!-- btc 줄 -->
     <div class="col-md-2">
@@ -29,7 +28,7 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <input type="number" value="0" id="btc-amount" style="font-size: 10px; width: 100%">
+                        <input type="number" value="0" id="btc-amount" min="0" style="font-size: 10px; width: 100%">
                     </div>
                     <div class="col-md-6" style="text-align: right">
                         <input type="number" value="{{wallet.btc}}" id="btc-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
@@ -45,10 +44,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="btn btn-danger" onclick="">매수</div>
+                        <div class="btn btn-danger" onclick="economy('btc','buy')">매수</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-primary" onclick="">매도</div>
+                        <div class="btn btn-primary" onclick="economy('btc','sell')">매도</div>
                     </div>
                 </div>
                 <div class="mt-2" style="text-align: center">
@@ -70,7 +69,7 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <input type="number" value="0" id="bch-amount" style="font-size: 10px; width: 100%">
+                        <input type="number" value="0" id="bch-amount" min="0" style="font-size: 10px; width: 100%">
                     </div>
                     <div class="col-md-6" style="text-align: right">
                         <input type="number" value="{{wallet.bch}}" id="bch-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
@@ -86,10 +85,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="btn btn-danger" onclick="">매수</div>
+                        <div class="btn btn-danger" onclick="economy('bch','buy')">매수</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-primary" onclick="">매도</div>
+                        <div class="btn btn-primary" onclick="economy('bch','sell')">매도</div>
                     </div>
                 </div>
                 <div class="mt-2" style="text-align: center">
@@ -111,7 +110,7 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <input type="number" value="0" id="btg-amount" style="font-size: 10px; width: 100%">
+                        <input type="number" value="0" id="btg-amount" min="0" style="font-size: 10px; width: 100%">
                     </div>
                     <div class="col-md-6" style="text-align: right">
                         <input type="number" value="{{wallet.btg}}" id="btg-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
@@ -127,10 +126,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="btn btn-danger" onclick="">매수</div>
+                        <div class="btn btn-danger" onclick="economy('btg','buy')">매수</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-primary" onclick="">매도</div>
+                        <div class="btn btn-primary" onclick="economy('btg','sell')">매도</div>
                     </div>
                 </div>
                 <div class="mt-2" style="text-align: center">
@@ -152,7 +151,7 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <input type="number" value="0" id="eos-amount" style="font-size: 10px; width: 100%">
+                        <input type="number" value="0" id="eos-amount" min="0" style="font-size: 10px; width: 100%">
                     </div>
                     <div class="col-md-6" style="text-align: right">
                         <input type="number" value="{{wallet.eos}}" id="eos-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
@@ -168,10 +167,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="btn btn-danger" onclick="">매수</div>
+                        <div class="btn btn-danger" onclick="economy('eos','buy')">매수</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-primary" onclick="">매도</div>
+                        <div class="btn btn-primary" onclick="economy('eos','buy')">매도</div>
                     </div>
                 </div>
                 <div class="mt-2" style="text-align: center">
@@ -198,7 +197,7 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <input type="number" value="0" id="etc-amount" style="font-size: 10px; width: 100%">
+                        <input type="number" value="0" id="etc-amount" min="0" style="font-size: 10px; width: 100%">
                     </div>
                     <div class="col-md-6" style="text-align: right">
                         <input type="number" value="{{wallet.etc}}" id="etc-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
@@ -214,10 +213,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="btn btn-danger" onclick="">매수</div>
+                        <div class="btn btn-danger" onclick="economy('etc','buy')">매수</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-primary" onclick="">매도</div>
+                        <div class="btn btn-primary" onclick="economy('etc','sell')">매도</div>
                     </div>
                 </div>
                 <div class="mt-2" style="text-align: center">
@@ -239,7 +238,7 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <input type="number" value="0" id="eth-amount" style="font-size: 10px; width: 100%">
+                        <input type="number" value="0" id="eth-amount" min="0" style="font-size: 10px; width: 100%">
                     </div>
                     <div class="col-md-6" style="text-align: right">
                         <input type="number" value="{{wallet.eth}}" id="eth-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
@@ -255,10 +254,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="btn btn-danger" onclick="">매수</div>
+                        <div class="btn btn-danger" onclick="economy('eth','buy')">매수</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-primary" onclick="">매도</div>
+                        <div class="btn btn-primary" onclick="economy('eth','sell')">매도</div>
                     </div>
                 </div>
                 <div class="mt-2" style="text-align: center">
@@ -280,7 +279,7 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <input type="number" value="0" id="ltc-amount" style="font-size: 10px; width: 100%">
+                        <input type="number" value="0" id="ltc-amount" min="0" style="font-size: 10px; width: 100%">
                     </div>
                     <div class="col-md-6" style="text-align: right">
                         <input type="number" value="{{wallet.ltc}}" id="ltc-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
@@ -296,10 +295,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="btn btn-danger" onclick="">매수</div>
+                        <div class="btn btn-danger" onclick="economy('ltc','buy')">매수</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-primary" onclick="">매도</div>
+                        <div class="btn btn-primary" onclick="economy('ltc','sell')">매도</div>
                     </div>
                 </div>
                 <div class="mt-2" style="text-align: center">
@@ -321,7 +320,7 @@
                 </div>
                 <div class="row mb-1">
                     <div class="col-md-6">
-                        <input type="number" value="0" id="xrp-amount" style="font-size: 10px; width: 100%">
+                        <input type="number" value="0" id="xrp-amount" min="0" style="font-size: 10px; width: 100%">
                     </div>
                     <div class="col-md-6" style="text-align: right">
                         <input type="number" value="{{wallet.xrp}}" id="xrp-reserve" style="font-size: 10px; width: 100%; background-color: silver" readonly>
@@ -337,10 +336,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="btn btn-danger" onclick="">매수</div>
+                        <div class="btn btn-danger" onclick="economy('xrp','buy')">매수</div>
                     </div>
                     <div class="col-md-6" style="text-align: right">
-                        <div class="btn btn-primary" onclick="">매도</div>
+                        <div class="btn btn-primary" onclick="economy('xrp','sell')">매도</div>
                     </div>
                 </div>
                 <div class="mt-2" style="text-align: center">
