@@ -42,7 +42,11 @@ var lotto = {
     init: function () {
         var _this = this;
         $('#btn-lotto').on('click', function () {
-            _this.lotto();
+            if($('#lotto-isRaffle').val()=='true'){
+                $('.lottoBall').detach();
+                load();
+            }
+            setTimeout(function(){_this.lotto();}, 100);
         });
     },
     lotto: function () {
@@ -51,10 +55,7 @@ var lotto = {
             email: $('#user-email').val()
         };
 
-        if($('#lotto-isRaffle').val()=='true'){
-            $('.lottoBall').detach();
-            load();
-        }
+
 
         $.ajax({
             type: 'POST',
