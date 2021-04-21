@@ -112,7 +112,7 @@ function calPL(){
 
 //갯수적용
 function amountCoin(coin, amount) {
-    if(amount='전량'){
+    if(amount=='전량'){
         $('#'+coin+'-amount').val($('#'+coin+'-reserve').val());
     }else { //절반
         $('#'+coin+'-amount').val(Math.round($('#'+coin+'-reserve').val()/2));
