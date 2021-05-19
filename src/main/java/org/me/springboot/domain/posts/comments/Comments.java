@@ -12,7 +12,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 public class Comments extends BaseTimeEntity {
-
+    /** Comments 엔티티
+     *
+     * CommentsId
+     *      posts : 게시글 ID [외래키, 복합키]
+     *      step : 해당 게시글의 코멘트 순번 [복합키]
+     * comment : 코멘트 내용
+     * author : 코멘트 작성자
+     */
     @EmbeddedId
     private CommentsId commentsId;
 

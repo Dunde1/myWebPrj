@@ -16,7 +16,17 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class PostsService {
-
+    /** 게시판의 게시글 DB테이블(Posts)을 조작하여 기능을 수행하는 서비스입니다.
+     *
+     * save() : 게시글을 저장합니다.
+     * update() : 게시글을 수정합니다.
+     * findById() : 게시글의 상세정보를 가져옵니다.
+     * findPageDesc() : 게시글의 해당 페이지의 리스트를 가져옵니다.
+     *      인자값으로 필터(filter)와 단어(word)를 줄 경우 리스트 중 해당 필터에 해당하는 단어만 검색하여 가져옵니다.
+     * allRowCount() : 현재 게시글의 갯수를 가져옵니다.
+     *      인자값으로 필터(filter)와 단어(word)를 줄 경우 갯수 중 해당 필터에 해당하는 단어만 검색하여 가져옵니다.
+     * delete() : 게시글을 삭제합니다.
+     */
     private final PostsRepository postsRepository;
 
     @Transactional

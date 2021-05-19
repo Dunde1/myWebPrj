@@ -10,13 +10,22 @@ import org.me.springboot.web.dto.posts.PostsSaveRequestDto;
 import org.me.springboot.web.dto.posts.PostsUpdateRequestDto;
 import org.me.springboot.web.dto.posts.comments.CommentsSaveRequestDto;
 import org.me.springboot.web.dto.posts.comments.CommentsUpdateRequestDto;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
 public class PostsApiController {
-
+    /** 게시판의 게시글과 코멘트의 읽기, 생성, 수정, 삭제 등을 담당합니다.
+     *
+     * save() : 게시글을 저장합니다.
+     * update() : 게시글을 수정합니다.
+     * findById() : 게시글의 상세정보를 가져옵니다.
+     * delete() : 게시글을 삭제합니다.
+     *
+     * saveComments() : 코멘트를 저장합니다.
+     * updateComments() : 코멘트를 수정합니다.
+     * deleteComments() : 코멘트를 삭제합니다.
+     */
     private final PostsService postsService;
     private final CommentsService commentsService;
 

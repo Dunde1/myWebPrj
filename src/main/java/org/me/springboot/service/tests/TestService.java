@@ -1,4 +1,4 @@
-package org.me.springboot.service.posts;
+package org.me.springboot.service.tests;
 
 import lombok.RequiredArgsConstructor;
 import org.me.springboot.domain.test.api.TestCalculate;

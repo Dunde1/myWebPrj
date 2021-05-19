@@ -21,7 +21,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class CommentsService {
-
+    /** 게시판의 코멘트 DB테이블(Comments)을 조작하여 기능을 수행하는 서비스입니다.
+     *
+     * findComments() : 해당 게시글의 코멘트를 리스트로 전부 가져옵니다.
+     * save() : 해당 게시글에 코멘트를 저장합니다.
+     * update() : 해당 게시글의 코멘트를 수정합니다.
+     * delete() : 해당 게시글의 코멘트를 삭제합니다.
+     */
     private final CommentsRepository commentsRepository;
 
     @Transactional(readOnly = true)
@@ -35,7 +41,7 @@ public class CommentsService {
     public CommentsId save(CommentsSaveRequestDto requestDto) {
         CommentsId commentsId = requestDto.getCommentsId();
         Integer step = commentsRepository.countMaxStep(commentsId.getPosts().getId());
-        step = step==null?0:step+1;
+        step = (step == null) ? 0 : step + 1;
         commentsId.setStep(step);
 
         return commentsRepository.save(CommentsSaveRequestDto.builder()

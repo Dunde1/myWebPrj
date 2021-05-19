@@ -20,7 +20,18 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
-
+    /** 메인화면에서 이동을 담당하는 컨트롤러 입니다.
+     *
+     * index() : 메인 화면으로 이동합니다.
+     * login() : 로그인 창으로 이동합니다.
+     * postsMain() : 게시판 페이지로 이동합니다. 첫 화면에서 게시글 리스트를 가져옵니다. (postsList()를 호출하게 됩니다.)
+     *      이 페이지에서 글 쓰기가 가능합니다.
+     * postsList() : 게시판 메인화면에서 몇번째 페이지의 리스트를 가져올 것인지 정하고 화면을 띄웁니다.
+     * postsUpdate() : 게시판 상세 정보 페이지를 띄웁니다. 이 페이지에서 게시글과 코멘트의 수정, 삭제가 가능합니다.
+     * testApiMain() : Api를 테스트해 볼 수 있는 페이지로 이동합니다.
+     * lottoMain() : 타 프로젝트와 연동하여 사용하는 로또추첨 페이지로 이동합니다.
+     * bitcoinMain() : 실제 비트코인 거래소의 Api를 이용한 가상 비트코인 거래소 페이지로 이동합니다.
+     */
     private final PostsService postsService;
     private final CommentsService commentsService;
     private final BitcoinService bitcoinService;
