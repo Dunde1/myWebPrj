@@ -1,9 +1,17 @@
+/*
+    isStart : 가격정보가 로딩이 되었을때 true가 되어 코인을 구매할 수 있도록 합니다.
+    bitcoinLogs : 비트코인 로그의 정보들을 담습니다.
+    coins : 코인의 이름을 담은 배열정보입니다.
+    fees : 코인을 팔 때 발생하는 수수료 입니다.
+ */
 let isStart = false;
 let bitcoinLogs;
 let coins = ["btc","bch","btg","eos","etc","eth","ltc","xrp"];
 let fees = 0.0005; //0.05%
 
-//매시간마다 코인가격 가져오기
+/*
+    ajax를 통해 서버의 코인의 가격정보를 가져옵니다.
+ */
 function coinPrice(){
     $.ajax({
         type: 'POST',
@@ -26,7 +34,9 @@ function coinPrice(){
     });
 }
 
-//계좌 리프레쉬
+/*
+    현재 계좌정보를 새로고침합니다.
+ */
 function accountRefresh(){
     let cash = parseInt($('#cash').text());
 
@@ -49,7 +59,9 @@ function accountRefresh(){
     $('#totalAccountValue').text(totalAccountValue);
 }
 
-//로그 불러오기
+/*
+    ajax를 통하여 현재 이메일을 가진 유저의 비트코인 거래내역을 전부 가져옵니다.
+ */
 function loadBitcoinLog(){
     $.ajax({
         type: 'POST',
@@ -73,7 +85,9 @@ function loadBitcoinLog(){
     });
 }
 
-//로그 분석(평단가)
+/*
+    비트코인 거래내역을 통해 계산하여 현재 가지고 있는 코인의 평단가를 계산하여 보여줍니다.
+ */
 function logAnalysis(){
     let avgs = {"btc":0, "bch":0, "btg":0, "eos":0, "etc":0, "eth":0, "ltc":0, "xrp":0};
     let buyValues = {"btc":0, "bch":0, "btg":0, "eos":0, "etc":0, "eth":0, "ltc":0, "xrp":0};
@@ -101,7 +115,9 @@ function logAnalysis(){
     }
 }
 
-//손익 계산
+/*
+    현재 보유한 코인의 평단가와 현재 코인의 가격, 판매했을 때 수수료 등을 계산하여 손익이 얼마가 되는지 계산하여 보여줍니다.
+ */
 function calPL(){
     for(let idx in coins){
         if($('#'+coins[idx]+'-avg').text()=='-') $('#'+coins[idx]+'-PL').text('-');
@@ -110,7 +126,9 @@ function calPL(){
     }
 }
 
-//갯수적용
+/*
+    전량, 혹은 절반 버튼을 클릭하였을 때 현재 보유한 코인의 전량, 혹은 절반의 양만큼 표시합니다.
+ */
 function amountCoin(coin, amount) {
     if(amount=='전량'){
         $('#'+coin+'-amount').val($('#'+coin+'-reserve').val());
@@ -119,7 +137,9 @@ function amountCoin(coin, amount) {
     }
 }
 
-//로그화면에 저장
+/*
+    가져온 비트코인 거래내역을 페이지의 데이터테이블을 이용하여 저장하고 보여줍니다.
+ */
 function saveBitcoinLog(coin, trading, amount, price){
     let d = new Date();
     let month = parseInt(d.getMonth())+1;
@@ -131,7 +151,9 @@ function saveBitcoinLog(coin, trading, amount, price){
     bitcoinLogs.push({'createdDate':datetime, 'coins':coin, 'order':trading, 'amount':amount,'value':price});
 }
 
-//매수매도 버튼 작동
+/*
+    사용자가 매수, 혹은 매도를 클릭했을 때 상호작용을 담당합니다.
+ */
 function economy(coin, trading){
     let amount = parseInt($('#'+coin+'-amount').val());
 
@@ -192,11 +214,17 @@ function economy(coin, trading){
     });
 }
 
+/*
+    페이지가 준비되었을 때 비트코인 현재 가격과 현재 유저의 비트코인 거래내역을 전부 가져옵니다.
+ */
 $(document).ready(function (){
     coinPrice();
     loadBitcoinLog();
 });
 
+/*
+    매 1초마다 코인의 가격정보를 가져옵니다.
+ */
 coinUpdate = setInterval(function () {
     coinPrice();
 }, 1000);

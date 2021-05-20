@@ -11,7 +11,16 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 public class User extends BaseTimeEntity {
-
+    /** User 엔티티
+     *
+     * id : 유저 ID [기본키, AUTO_INCREMENT]
+     * name : 유저 이름
+     * email : 유저 이메일
+     * picture : 유저 프로필 사진
+     * role : 유저 권한
+     *
+     * getRoleKey() : 유저의 권한정보를 가져옵니다.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

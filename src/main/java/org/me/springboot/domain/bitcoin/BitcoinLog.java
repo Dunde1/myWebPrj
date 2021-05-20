@@ -18,7 +18,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 public class BitcoinLog extends BaseTimeEntity{
-
+    /** BitcoinLog 엔티티
+     *
+     * id : 비트코인 로그 ID [기본키, AUTO_INCREMENT]
+     * user : 유저 ID [외래키]
+     * coins : 코인의 이름 (btc, bch, btg, eos, etc, eth, ltc, xrp 중 1)
+     * amount : 코인의 변화량 (음수 : 판매, 양수 : 구매)
+     * value : 현재 코인의 시세
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

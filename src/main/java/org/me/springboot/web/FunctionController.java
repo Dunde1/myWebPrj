@@ -3,17 +3,18 @@ package org.me.springboot.web;
 import org.me.springboot.config.auth.LoginUser;
 import org.me.springboot.config.auth.dto.SessionUser;
 import org.me.springboot.web.dto.lotto.LottoListRequestDto;
-import org.me.springboot.web.dto.lotto.LottoTestDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class LottoController {
-
+public class FunctionController {
+    /** 추가기능이 있는 페이지로 이동시키는 컨트롤러 입니다.
+     *
+     * lottoListPop() : 해당 주소로 요청 시 로또추첨 페이지로 이동시킵니다.
+     */
     @PostMapping("/function/lottoList")
     public String lottoListPop(@RequestBody List<LottoListRequestDto> requestDtos, Model model, @LoginUser SessionUser user){
         model.addAttribute("lottoList", requestDtos);
@@ -21,13 +22,5 @@ public class LottoController {
             model.addAttribute("user", user);
         }
         return "lotto/lottoMain";
-    }
-
-    @PostMapping("/function/lottoTest")
-    public @ResponseBody List<LottoListRequestDto> lottoListPop(@RequestBody LottoTestDto testDto){
-        List<LottoListRequestDto> requestDtos = new ArrayList<>();
-        requestDtos.add(LottoListRequestDto.builder().lnum1("1").lnum2("1").lnum3("1").lnum4("1").lnum5("1").lnum6("1").build());
-        requestDtos.add(LottoListRequestDto.builder().lnum1("2").lnum2("32").lnum3("12").lnum4("22").lnum5("40").lnum6("4").build());
-        return requestDtos;
     }
 }

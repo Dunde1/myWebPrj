@@ -12,7 +12,6 @@ import org.me.springboot.domain.user.UserRepository;
 import org.me.springboot.web.dto.bitcoin.*;
 import org.me.springboot.web.dto.wallet.WalletResponseDto;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -27,7 +26,16 @@ import java.util.stream.Collectors;
 @PropertySource("classpath:application.yml")
 @Service
 public class BitcoinService {
-
+    /** 비트코인의 정보가져오기, 지갑 생성, 로그 리스트 가져오기, 거래내역 업데이트를 담당하는 서비스 입니다.
+     *
+     * coinInfoResponseDto : 비트코인(btc, bch, btg, eos, etc, eth, ltc, xrp)의 현재 가격정보를 담는 Dto입니다.
+     *
+     * getCoinInfoUsedApi() : 매 1초마다 외부 실제 비트코인 서버에 api를 요청하여 각 코인들의 현재 가격정보를 가져와 Dto에 저장합니다.
+     * getCoinInfos() : 저장된 현재 코인의 가격정보 Dto를 전달합니다.
+     * walletCreate() : 지갑정보가 없는 유저의 초기 지갑정보를 저장합니다.
+     * bitcoinLogGetAll() : 해당 이메일을 가진 유저의 비트코인 거래내역을 전부 리스트에 담아 전달합니다.
+     * bitcoinDealUpdate() : 수정된 지갑을 저장하고 해당 변화량을 거래내역에 저장합니다.
+     */
     private final UserRepository userRepository;
     private final WalletRepository walletRepository;
     private final BitcoinLogRepository bitcoinLogRepository;

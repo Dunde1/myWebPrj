@@ -6,8 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TestCalculate {
-
-    public TestApiResponseDto Calcs(TestApiRequestDto requestDto) {
+    /** 테스트 연산을 수행하는 클래스입니다.
+     *
+     * calcs() : TestApiRequestDto에 있는 값 number1, number2의 사칙연산을 수행 후 값들을 TestApiResponseDto에 담아 리턴합니다.
+     */
+    public TestApiResponseDto calcs(TestApiRequestDto requestDto) {
 
         int number1 = 0, number2 = 0;
         String add, sub, mul, div;

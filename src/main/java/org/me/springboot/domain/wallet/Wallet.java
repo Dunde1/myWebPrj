@@ -16,7 +16,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 public class Wallet extends BaseTimeEntity{
-
+    /** Wallet 엔티티
+     *
+     * id : 지갑 ID [기본키, AUTO_INCREMENT]
+     * user : 유저 ID [외래키], 한 유저당 하나의 지갑만 보유
+     * cash : 유저의 현금 정보
+     * btc, bch, btg, eos, etc, eth, ltc, xrp : 각 코인의 보유현황
+     * loan : 유저의 대출금 정보, 현재 대출 갚기 미구현
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
