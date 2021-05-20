@@ -8,4 +8,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LoginUser {
+    /**
+     * 커스텀 어노테이션 작성 LoginUser
+     */
 }
