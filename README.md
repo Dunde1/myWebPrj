@@ -1,7 +1,7 @@
 # myWebPrj
 version : 2.0
 
-외부 웹 주소 : http://mit4.iptime.org:3380/
+외부 웹 주소 : http://mit4.iptime.org:3380/ (현재 가동 중지)
 
 안녕하세요. 제 프로젝트에 오신걸 환영합니다.
 
